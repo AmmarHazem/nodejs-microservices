@@ -6,7 +6,7 @@ const producer = kafka.producer();
 
 const connectProducer = async () => await producer.connect();
 
-const emitUserCreated = async (user) => {
+export const emitUserCreated = async (user) => {
   await producer.send({
     topic: EVENTS.USER_CREATED,
     messages: [{ value: JSON.stringify(user) }],
