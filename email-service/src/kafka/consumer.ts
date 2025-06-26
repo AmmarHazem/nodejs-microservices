@@ -14,7 +14,7 @@ export async function connectConsumer() {
         if (payload.topic === EVENTS.ORDER_CREATED) {
           console.log(`Sending Order Confirmation to User ${event.userId}`);
         } else if (payload.topic === EVENTS.USER_CREATED) {
-          console.log(`Sending Welcome Email to ${event.email}`);
+          console.log(`Sending Welcome Email to ${event.id}`);
         }
       } catch (e) {
         console.log("--- email consumer eachMessage error", e);
