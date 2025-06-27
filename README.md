@@ -25,19 +25,42 @@ This is a simple microservices application demonstrating event-driven architectu
 ## Prerequisites
 
 - Docker and Docker Compose
-- Node.js (v16 or higher)
+- Node.js (v16 or higher) - only needed for local development
 - npm or yarn
 
 ## Quick Start
 
-### 1. Start Kafka Infrastructure
+### Option 1: Run Everything with Docker Compose (Recommended)
+
+This is the easiest way to run the entire application:
+
+```bash
+# Build and start all services
+docker-compose up --build
+
+# Or run in background
+docker-compose up --build -d
+```
+
+This will start:
+- Zookeeper (Port 2181)
+- Kafka (Port 9092)
+- User Service (Port 3001)
+- Email Service (Port 3002)
+- Order Service (Port 3003)
+
+### Option 2: Run Services Locally
+
+If you prefer to run the Node.js services locally while using Docker for Kafka:
+
+#### 1. Start Kafka Infrastructure
 
 ```bash
 # Start Kafka and Zookeeper using Docker Compose
-docker-compose up -d
+docker-compose up -d zookeeper kafka
 ```
 
-### 2. Install Dependencies
+#### 2. Install Dependencies
 
 ```bash
 # Install dependencies for all services
@@ -46,7 +69,7 @@ cd ../email-service && npm install
 cd ../order-services && npm install
 ```
 
-### 3. Start the Services
+#### 3. Start the Services
 
 Open three terminal windows and run each service:
 
@@ -149,10 +172,13 @@ curl http://localhost:3003/health
 3. **Order Creation**: When you create an order via the Order Service, it emits an `order-created` event to Kafka
 4. **Email Service**: Listens for `order-created` events and simulates sending an order confirmation email
 
-## Development
+## Docker Compose Configuration
 
-To run services in development mode with auto-restart:
+The `docker-compose.yml` file defines all services:
 
+```yaml
+services:
+  zookeeper:          # Required by Kafka
 ```bash
 # In each service directory
 npm run dev
