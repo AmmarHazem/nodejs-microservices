@@ -2,7 +2,7 @@ import { Kafka, Partitioners } from "kafkajs";
 import EVENTS from "../../../constants/events";
 import { OrderModel } from "../../models/OrderModel";
 
-const kafka = new Kafka({ clientId: "orders-service", brokers: ["localhost:9092"] });
+const kafka = new Kafka({ clientId: "orders-service", brokers: ["kafka:9092"] });
 
 const producer = kafka.producer({ createPartitioner: Partitioners.DefaultPartitioner });
 
